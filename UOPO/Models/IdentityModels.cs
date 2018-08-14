@@ -20,6 +20,10 @@ namespace UOPO.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<GroupCards> GroupCards { get; set; }
+        public DbSet<SoloCards> SoloCards { get; set; }
+        public DbSet<EncounterListModel> EncounterListModels { get; set; }
+
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {

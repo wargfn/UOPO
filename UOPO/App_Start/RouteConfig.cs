@@ -13,6 +13,15 @@ namespace UOPO
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            routes.MapMvcAttributeRoutes();
+
+            /* routes.MapRoute(
+                name: "GroupCardsByRelease",
+                url: "groupcards/release/{set}/{cardid}",
+                defaults: new { controller = "GroupCards", action = "ByRelease" },
+                constraints: new { set = @"\d{4}", cardid = @"\d{3}" });
+            */
+            
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

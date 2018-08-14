@@ -1,0 +1,30 @@
+﻿@model IEnumerable<UOPO.Models.GroupCards>
+@{
+    ViewBag.Title = "Too Many Bones: Encounter Cards";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1>Too Many Bones:</h1>
+<h2>Enounter Cards</h2>
+<p>@Html.ActionLink("New Encounter", "New", "GroupCards", null, new { @class = "btn btn-primary"})</p>
+
+<table id="cards" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Card Set</th>
+            <th>Card Group</th>
+            <th>Card Number</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var groupCards in Model)
+        {
+            <tr>
+                <td>@Html.ActionLink(groupCards.Name, "Details", "GroupCards", new { id = groupCards.Id }, null)</td>
+                <td>@groupCards.CardSet</td>
+                <td>@groupCards.CardType</td>
+                <td>@groupCards.CardNum</td>
+            </tr>
+        }
+    </tbody>
+</table>
