@@ -23,6 +23,7 @@ namespace UOPO.Models
         public DbSet<GroupCards> GroupCards { get; set; }
         public DbSet<SoloCards> SoloCards { get; set; }
         public DbSet<EncounterListModel> EncounterListModels { get; set; }
+        public DbSet<AdventuresModel> Adventures { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)

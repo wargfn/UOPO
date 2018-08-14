@@ -5,6 +5,8 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using UOPO.Models;
+using UOPO.DTOs;
+using AutoMapper;
 
 namespace UOPO.Controllers.API
 {
@@ -18,9 +20,9 @@ namespace UOPO.Controllers.API
         }
 
         // GET /API/GroupCards
-        public IEnumerable<GroupCards> GetGroupCards()
+        public IEnumerable<GroupCardsDTO> GetGroupCards()
         {
-            var groupCards = _context.GroupCards.ToList();
+            var groupCards = _context.GroupCards.ToList().Select(Mapper.Map<GroupCards,GroupCardsDTO>);
 
             if (groupCards == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
@@ -29,33 +31,35 @@ namespace UOPO.Controllers.API
         }
 
         // GET /API/GrouPCards/1
-        public GroupCards GetGroupCards(int id)
+        public GroupCardsDTO GetGroupCards(int id)
         {
             var groupCard = _context.GroupCards.SingleOrDefault(C => C.Id == id);
 
             if (groupCard == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
 
-            return groupCard;
+            return Mapper.Map<GroupCards, GroupCardsDTO>(groupCard);
         }
 
 
         // Post /api/GroupCards
         [HttpPost]
-        public GroupCards CreateGroupCards(GroupCards groupCard)
+        public GroupCardsDTO CreateGroupCards(GroupCardsDTO groupCardDTO)
         {
             if (!ModelState.IsValid)
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
-
+            var groupCard = Mapper.Map<GroupCardsDTO, GroupCards>(groupCardDTO);
             _context.GroupCards.Add(groupCard);
             _context.SaveChanges();
 
-            return groupCard;
+            groupCardDTO.Id = groupCard.Id;
+
+            return groupCardDTO;
         }
 
         // Post /API/GroupCards/1
         [HttpPut]
-        public void UpdateGroupCard(int id, GroupCards groupCard)
+        public GroupCardsDTO UpdateGroupCard(int id, GroupCardsDTO groupCardDTO)
         {
             if (!ModelState.IsValid)
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
@@ -65,21 +69,11 @@ namespace UOPO.Controllers.API
             if (groupCardInDB == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
 
-            groupCardInDB.Name = groupCard.Name;
-            groupCardInDB.FrontText = groupCard.FrontText;
-            groupCardInDB.BackTextOption1 = groupCard.BackTextOption1;
-            groupCardInDB.BackTextOption2 = groupCard.BackTextOption2;
-            groupCardInDB.BackTextOption3 = groupCard.BackTextOption3;
-            groupCardInDB.RewardsOption1 = groupCard.RewardsOption1;
-            groupCardInDB.RewardsOption2 = groupCard.RewardsOption2;
-            groupCardInDB.RewardsOption3 = groupCard.RewardsOption3;
-            groupCardInDB.Reward = groupCard.Reward;
-            groupCardInDB.CardSet = groupCard.CardSet;
-            groupCardInDB.CardType = groupCard.CardType;
-            groupCardInDB.CardNum = groupCard.CardNum;
-
+            Mapper.Map(groupCardDTO, groupCardInDB);
+          
             _context.SaveChanges();
 
+            return groupCardDTO;
         }
 
         // DELETE /api/GroupCards/1

@@ -1,8 +1,28 @@
-﻿
+﻿@model IEnumerable<UOPO.Models.AdventuresModel>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Adventures";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Adventures</h2>
+@if (!Model.Any())
+{
+    <p>We don't have any Adventures for you yet.</p>
+}
+else
+{
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>Adventure</tr>
+        </thead>
+        <tbody>
+            @foreach (var adventures in Model)
+            {
+                <tr>
+                    <td>@Html.ActionLink(adventures.Name, "Details", "Adventures", new { id = adventures.Id }, null)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
 
