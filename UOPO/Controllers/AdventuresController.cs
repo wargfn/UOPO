@@ -25,14 +25,16 @@ namespace UOPO.Controllers
         // GET: Adventures
         public ActionResult Index()
         {
-            var adventure = _context.Adventures.ToList();
-            //var adventure = _context.Adventures.Include(c => c.EncounterId).ToList();
+            //var adventure = _context.Adventures.ToList();
+            var adventure = _context.Adventures.Include(c => c.GetEncounterList).ToList();
+
+
             return View(adventure);
         }
 
         public ActionResult Details(int id)
         {
-            var adventure = _context.Adventures.SingleOrDefault(c => c.Id == id);
+            var adventure = _context.Adventures.Include(c => c.GetEncounterList).SingleOrDefault(a => a.Id == id);
 
             if (adventure == null)
                 return HttpNotFound();

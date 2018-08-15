@@ -14,6 +14,8 @@ namespace UOPO.App_Start
         {
             Mapper.CreateMap<GroupCards, GroupCardsDTO>();
             Mapper.CreateMap<GroupCardsDTO, GroupCards>();
+            Mapper.CreateMap<AdventuresModel, AdventuresDTO>();
+            Mapper.CreateMap<AdventuresDTO, AdventuresModel>();
         }
     }
 }

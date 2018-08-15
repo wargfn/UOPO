@@ -29,6 +29,6 @@ namespace UOPO.Models
         //public int? Day18 { get; set; } //
         //public int? Day19 { get; set; } //
         //public int? Day20 { get; set; } //
-
+        
     }
 }

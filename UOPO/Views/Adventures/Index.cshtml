@@ -20,6 +20,7 @@ else
             {
                 <tr>
                     <td>@Html.ActionLink(adventures.Name, "Details", "Adventures", new { id = adventures.Id }, null)</td>
+                    <td>@adventures.GetEncounterList.Name</td>
                 </tr>
             }
         </tbody>

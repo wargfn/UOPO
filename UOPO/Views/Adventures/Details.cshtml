@@ -1,8 +1,40 @@
-﻿
+﻿@model UOPO.Models.AdventuresModel
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = Model.Name;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details for Adventures</h2>
+<h2>@Model.Name</h2>
+<ul>
+    <li>@Model.Name</li>
+    <li>@Model.GetEncounterList.Name</li>
+    <li>Day 1: @Model.GetEncounterList.Day1</li>
+    <li>Day 2: @Model.GetEncounterList.Day2</li>
+    <li>Day 3: @Model.GetEncounterList.Day3</li>
+    <li>Day 4: @Model.GetEncounterList.Day4</li>
+    <li>Day 5: @Model.GetEncounterList.Day5</li>
+    <li>Day 6: @Model.GetEncounterList.Day6</li>
+    <li>Day 7: @Model.GetEncounterList.Day7</li>
+    <li>Day 8: @Model.GetEncounterList.Day8</li>
+    @if (Model.GetEncounterList.Day9 != null)
+    {
+        <li>Day 9: @Model.GetEncounterList.Day9</li>
+    }
+    @if (Model.GetEncounterList.Day10 != null)
+    {
+        <li>Day 10: @Model.GetEncounterList.Day10</li>
+    }
+    @if (Model.GetEncounterList.Day11 != null)
+    {
+        <li>Day 11: @Model.GetEncounterList.Day11</li>
+    }
+    @if (Model.GetEncounterList.Day12 != null)
+    {
+        <li>Day 12: @Model.GetEncounterList.Day12</li>
+    }
+    @if (Model.GetEncounterList.Day13 != null)
+    {
+    <li>Day 13: @Model.GetEncounterList.Day13</li>
+    }
+</ul>
 

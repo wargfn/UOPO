@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Data.Entity;
 using System.Net.Http;
 using System.Web.Http;
 using UOPO.Models;
@@ -19,74 +20,81 @@ namespace UOPO.Controllers.API
             _context = new ApplicationDbContext();
         }
 
-        // GET /API/GroupCards
-        public IEnumerable<GroupCardsDTO> GetGroupCards()
+        // GET /API/Adventures
+        public IHttpActionResult GetAdventures(string query = null)
         {
-            var groupCards = _context.GroupCards.ToList().Select(Mapper.Map<GroupCards, GroupCardsDTO>);
+            var adventuresQuery = _context.Adventures.Include(c => c.GetEncounterList);
 
-            if (groupCards == null)
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+            if (!String.IsNullOrWhiteSpace(query))
+                adventuresQuery = adventuresQuery.Where(c => c.Name.Contains(query));
 
-            return groupCards;
+            //if (adventures == null)
+            //     throw new HttpResponseException(HttpStatusCode.NotFound);
+            var adventuresDTO = adventuresQuery.ToList().Select(Mapper.Map<AdventuresModel, AdventuresDTO>);
+
+            return Ok(adventuresDTO);
         }
 
-        // GET /API/GrouPCards/1
-        public GroupCardsDTO GetGroupCards(int id)
+        // GET /API/Adventures/1
+        public AdventuresDTO GetAdventures(int id)
         {
-            var groupCard = _context.GroupCards.SingleOrDefault(C => C.Id == id);
+            var adventure = _context.Adventures.Include(c => c.GetEncounterList).SingleOrDefault(C => C.Id == id);
 
-            if (groupCard == null)
+            if (adventure == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
 
-            return Mapper.Map<GroupCards, GroupCardsDTO>(groupCard);
+            return Mapper.Map<AdventuresModel, AdventuresDTO>(adventure);
         }
 
 
-        // Post /api/GroupCards
+        // Post /api/Adventures
         [HttpPost]
-        public GroupCardsDTO CreateGroupCards(GroupCardsDTO groupCardDTO)
+        public IHttpActionResult CreateAdventures(AdventuresDTO adventuresDTO)
         {
             if (!ModelState.IsValid)
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
-            var groupCard = Mapper.Map<GroupCardsDTO, GroupCards>(groupCardDTO);
-            _context.GroupCards.Add(groupCard);
+                return BadRequest();
+
+            var adventures = Mapper.Map<AdventuresDTO, AdventuresModel>(adventuresDTO);
+            _context.Adventures.Add(adventures);
             _context.SaveChanges();
 
-            groupCardDTO.Id = groupCard.Id;
+            adventuresDTO.Id = adventures.Id;
 
-            return groupCardDTO;
+            return Created(new Uri(Request.RequestUri + "/" + adventures.Id), adventuresDTO);
         }
 
-        // Post /API/GroupCards/1
+        // Post /API/Adventures/1
         [HttpPut]
-        public GroupCardsDTO UpdateGroupCard(int id, GroupCardsDTO groupCardDTO)
+        public IHttpActionResult UpdateAdventure(int id, AdventuresDTO adventureDTO)
         {
             if (!ModelState.IsValid)
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+                return BadRequest();
 
-            var groupCardInDB = _context.GroupCards.SingleOrDefault(c => c.Id == id);
+            var adventureInDB = _context.Adventures.SingleOrDefault(c => c.Id == id);
 
-            if (groupCardInDB == null)
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+            if (adventureInDB == null)
+                return NotFound();
 
-            Mapper.Map(groupCardDTO, groupCardInDB);
+            Mapper.Map(adventureDTO, adventureInDB);
 
             _context.SaveChanges();
 
-            return groupCardDTO;
+            return Ok();
         }
 
-        // DELETE /api/GroupCards/1
+        // DELETE /api/Adventures/1
         [HttpDelete]
-        public void DeleteGroupCard(int id)
+        public IHttpActionResult DeleteAdventure(int id)
         {
-            var groupCardInDB = _context.GroupCards.SingleOrDefault(c => c.Id == id);
+            var adventureInDB = _context.Adventures.SingleOrDefault(c => c.Id == id);
 
-            if (groupCardInDB == null)
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+            if (adventureInDB == null)
+                return NotFound();
 
-            _context.GroupCards.Remove(groupCardInDB);
+            _context.Adventures.Remove(adventureInDB);
             _context.SaveChanges();
+
+            return Ok();
         }
         
     }
