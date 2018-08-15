@@ -35,9 +35,10 @@ namespace UOPO.Controllers
         public ActionResult Details(int id)
         {
             var adventure = _context.Adventures.Include(c => c.GetEncounterList).SingleOrDefault(a => a.Id == id);
-
+          
             if (adventure == null)
                 return HttpNotFound();
+            
             return View(adventure);
         }
     }

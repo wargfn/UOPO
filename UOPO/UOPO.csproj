@@ -278,6 +278,10 @@
     <Compile Include="Migrations\201808141825156_AddingAdventureAndEncounters.Designer.cs">
       <DependentUpon>201808141825156_AddingAdventureAndEncounters.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808151551118_UpdatesFromAPI.cs" />
+    <Compile Include="Migrations\201808151551118_UpdatesFromAPI.Designer.cs">
+      <DependentUpon>201808151551118_UpdatesFromAPI.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdventuresModel.cs" />
@@ -446,6 +450,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808141825156_AddingAdventureAndEncounters.resx">
       <DependentUpon>201808141825156_AddingAdventureAndEncounters.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808151551118_UpdatesFromAPI.resx">
+      <DependentUpon>201808151551118_UpdatesFromAPI.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
