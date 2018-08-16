@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Data.Entity;
 using System.Net.Http;
 using System.Web.Http;
-using System.Data.Entity;
 using UOPO.Models;
 using UOPO.DTOs;
 using AutoMapper;
@@ -25,8 +25,8 @@ namespace UOPO.Controllers.API
         {
             var groupCardsQuery = _context.GroupCards;
 
-            //if (!String.IsNullOrWhiteSpace(query))
-            //    groupCardsQuery = groupCardsQuery.Where(query);
+           //if (!String.IsNullOrWhiteSpace(query))
+           //     groupCardsQuery = groupCardsQuery.Where(c => c.Name.Contains(query));
 
             var groupCardsDTO = groupCardsQuery.ToList().Select(Mapper.Map<GroupCards,GroupCardsDTO>);
 

@@ -57,10 +57,10 @@ namespace UOPO.Controllers
         {
             var groupCards = _context.GroupCards.ToList();
             var days = 8; // Max Number of Days in NOM's Deck
-            var tryantCard = 50;
-            var day1 = 31;
-            var day2 = 32;
-            var day3 = 33;
+            //var tryantCard = 50;
+            //var day1 = 31;
+            //var day2 = 32;
+            //var day3 = 33;
 
             List<int> EncounterList = new List<int>
             {
